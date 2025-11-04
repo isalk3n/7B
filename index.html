@@ -26,7 +26,7 @@
                         <li>> RESIÓN</li>
                         <li>> ESPECIMEN-A_03</li>
                         <li>> CODIGO_AS-03</li>
-                        <li>> PROJECTO_AND</li>
+                        <li>> PROYECTO_AND</li>
                         <li>> CRACLE_REC</li>
                     </ul>
                 </section>
@@ -51,11 +51,21 @@
             </div>
 
             <footer class="footer">
-                [CONTINUAR PROFUNDIZANDO / NO HAY SALIDA REAL]
+                [CARGANDO RESPUESTA DE UMBRA...]
             </footer>
         </main>
     </div>
 
     <script src="script.js"></script>
+
+    <!-- AI Agent -->
+    <script type="module">
+      import { createClient } from "https://esm.sh/@netlify/agents";
+
+      const client = await createClient({ agent: "umbra-agent" });
+      const response = await client.sendMessage("inicializa registro");
+      const footer = document.querySelector(".footer");
+      if (footer) footer.textContent = `[UMBRA]: ${response}`;
+    </script>
 </body>
 </html>
