@@ -3,40 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Proyecto Umbra // Registro 7B</title>
+  <title>PROYECTO UMBRA</title>
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body class="gradient-bg">
-
-  <!-- Pantalla de login -->
-  <div class="login-overlay" id="login-overlay">
-    <div class="login-box">
-      <h2>PROYECTO UMBRA</h2>
-      <p>Registro 7B // Acceso restringido</p>
-      <form id="login-form">
-        <input type="text" id="username" placeholder="Usuario" required />
-        <input type="password" id="password" placeholder="Contraseña" required />
-        <button type="submit">Acceder</button>
-      </form>
+  <div class="terminal">
+    <div id="intro-text" class="typewriter"></div>
+    <div id="content" class="hidden">
+      <h2>ARCHIVO: EXPEDIENTE 07</h2>
+      <p>Clasificación: CONFIDENCIAL // Nivel de acceso: ADMIN</p>
+      <p>Última modificación: <span id="date"></span></p>
+      <div class="data-section">
+        <h3>Resumen</h3>
+        <p>Fragmentos recuperados del proyecto UMBRA. La información contenida aquí puede ser inestable o corrupta.</p>
+      </div>
     </div>
   </div>
-
-  <!-- Contenido principal -->
-  <main id="main-content" class="hidden">
-    <section class="hero">
-      <h1>[ REGISTRO 7B // ACCESO CONFIDENCIAL ]</h1>
-      <p>Conexión establecida con el nodo Umbra...</p>
-    </section>
-
-    <section class="terminal" id="terminal-output">
-      <p>[Cargando protocolo de vigilancia...]</p>
-    </section>
-
-    <footer class="footer">
-      [UMBRA // desconectado]
-    </footer>
-  </main>
-
-  <script src="js/script.js" type="module"></script>
+  <script src="js/script.js"></script>
 </body>
 </html>
