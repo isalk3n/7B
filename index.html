@@ -1,71 +1,42 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>REGISTRO 97: ENTIDADES</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Proyecto Umbra // Registro 7B</title>
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body>
-    <div class="crt">
-        <header class="header">
-            <div class="top-bar">
-                <span class="file">PEROR 1998</span>
-                <span class="alert">GET_OUT_NOW!</span>
-            </div>
-        </header>
+<body class="gradient-bg">
 
-        <main class="terminal">
-            <h1>[REGISTRO 97: ENTIDADES]</h1>
-
-            <div class="layout">
-                <section class="left">
-                    <ul class="menu">
-                        <li>> ENTRADA_01_CLX</li>
-                        <li>> ENTRADA_08_CLX</li>
-                        <li>> RESIÓN</li>
-                        <li>> ESPECIMEN-A_03</li>
-                        <li>> CODIGO_AS-03</li>
-                        <li>> PROYECTO_AND</li>
-                        <li>> CRACLE_REC</li>
-                    </ul>
-                </section>
-
-                <section class="center">
-                    <div class="image-container">
-                        <img src="assets/entity.png" alt="Entidad censurada">
-                        <div class="censor">[IMAGEN CENSURADA PROTOCOLO 7B]</div>
-                    </div>
-                    <p class="warning">NO MIRE DIRECTAMENTE. LA FRECUENCIA ES INCORRECTA.</p>
-                </section>
-
-                <section class="right">
-                    <div class="scan">
-                        <img src="assets/distortion.gif" alt="Distorsión visual">
-                        <p class="info">
-                            SUEÑOS_ROTOS<br>
-                            SUEÑOS_DISTORSIÓN // SOMBRAS HALLAN REPETICIÓN...
-                        </p>
-                    </div>
-                </section>
-            </div>
-
-            <footer class="footer">
-                [CARGANDO RESPUESTA DE UMBRA...]
-            </footer>
-        </main>
+  <!-- Pantalla de login -->
+  <div class="login-overlay" id="login-overlay">
+    <div class="login-box">
+      <h2>PROYECTO UMBRA</h2>
+      <p>Registro 7B // Acceso restringido</p>
+      <form id="login-form">
+        <input type="text" id="username" placeholder="Usuario" required />
+        <input type="password" id="password" placeholder="Contraseña" required />
+        <button type="submit">Acceder</button>
+      </form>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <!-- Contenido principal -->
+  <main id="main-content" class="hidden">
+    <section class="hero">
+      <h1>[ REGISTRO 7B // ACCESO CONFIDENCIAL ]</h1>
+      <p>Conexión establecida con el nodo Umbra...</p>
+    </section>
 
-    <!-- AI Agent -->
-    <script type="module">
-      import { createClient } from "https://esm.sh/@netlify/agents";
+    <section class="terminal" id="terminal-output">
+      <p>[Cargando protocolo de vigilancia...]</p>
+    </section>
 
-      const client = await createClient({ agent: "umbra-agent" });
-      const response = await client.sendMessage("inicializa registro");
-      const footer = document.querySelector(".footer");
-      if (footer) footer.textContent = `[UMBRA]: ${response}`;
-    </script>
+    <footer class="footer">
+      [UMBRA // desconectado]
+    </footer>
+  </main>
+
+  <script src="js/script.js" type="module"></script>
 </body>
 </html>
