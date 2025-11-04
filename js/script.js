@@ -1,11 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const warning = document.querySelector('.footer');
+    const footer = document.querySelector('.footer');
+    if (!footer) return;
 
-    // Simula un parpadeo glitch del texto
     setInterval(() => {
-        warning.style.visibility = (warning.style.visibility === 'hidden') ? 'visible' : 'hidden';
+        footer.style.visibility = (footer.style.visibility === 'hidden') ? 'visible' : 'hidden';
     }, 600);
 
-    // Pequeño efecto de sonido o interferencia (si deseas agregar más)
-    console.log("⚠️ ADVERTENCIA: EL REGISTRO ESTÁ ACTIVO ⚠️");
+    console.log("⚠️ PROYECTO UMBRA INICIALIZADO ⚠️");
 });
