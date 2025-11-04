@@ -96,3 +96,71 @@ body {
     border-top: 1px solid #111;
     padding-top: 10px;
 }
+
+/* === LOGIN PAGE === */
+
+.login-body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: #020202 url('assets/bg-noise.png');
+  font-family: 'Share Tech Mono', monospace;
+  color: #0f0;
+  text-shadow: 0 0 2px #0f0;
+}
+
+.login-container {
+  border: 1px solid #0f0;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  width: 320px;
+  text-align: center;
+  animation: flicker 0.2s infinite alternate;
+}
+
+.login-title {
+  color: red;
+  margin-bottom: 10px;
+}
+
+.login-sub {
+  font-size: 13px;
+  color: #aaa;
+  margin-bottom: 30px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.login-form input {
+  background: black;
+  border: 1px solid #0f0;
+  color: #0f0;
+  padding: 5px;
+  font-family: inherit;
+  text-align: center;
+}
+
+.login-form button {
+  background: #0f0;
+  border: none;
+  padding: 6px;
+  color: black;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.login-form button:hover {
+  background: #ff0000;
+  color: #fff;
+}
+
+.login-warning {
+  margin-top: 20px;
+  color: #ff0000;
+  font-size: 12px;
+}
