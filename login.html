@@ -5,80 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Acceso UMBRA</title>
   <link rel="stylesheet" href="css/style.css" />
-  <style>
-    body {
-      background: linear-gradient(135deg, #050507 0%, #1a0033 70%, #050507 100%);
-      color: #e0e0e0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
-      font-family: "Orbitron", sans-serif;
-      overflow: hidden;
-    }
-
-    .login-box {
-      background: rgba(10, 10, 15, 0.8);
-      border: 1px solid #8000ff;
-      border-radius: 12px;
-      box-shadow: 0 0 20px #6a00ff33;
-      padding: 2rem 3rem;
-      width: 320px;
-      text-align: center;
-      transition: all 0.4s ease;
-    }
-
-    .login-box h1 {
-      font-size: 1.4rem;
-      margin-bottom: 1rem;
-      color: #b87fff;
-      letter-spacing: 2px;
-    }
-
-    input {
-      width: 100%;
-      margin: 0.5rem 0;
-      padding: 0.6rem;
-      border: none;
-      border-radius: 4px;
-      background: #1a1a2b;
-      color: #fff;
-      text-align: center;
-      font-size: 0.9rem;
-    }
-
-    button {
-      width: 100%;
-      margin-top: 1rem;
-      padding: 0.7rem;
-      background: #6a00ff;
-      border: none;
-      border-radius: 4px;
-      color: #fff;
-      cursor: pointer;
-      font-weight: bold;
-      letter-spacing: 1px;
-      transition: background 0.3s ease;
-    }
-
-    button:hover {
-      background: #9000ff;
-    }
-
-    .shake {
-      animation: shake 0.3s;
-    }
-
-    @keyframes shake {
-      0% { transform: translateX(0); }
-      25% { transform: translateX(-5px); }
-      50% { transform: translateX(5px); }
-      75% { transform: translateX(-5px); }
-      100% { transform: translateX(0); }
-    }
-  </style>
 </head>
-<body>
+<body class="login-bg">
   <div class="login-box">
     <h1>PROYECTO UMBRA</h1>
     <form id="login-form">
