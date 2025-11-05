@@ -1,455 +1,62 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>REGISTRO 97 — Demo</title>
-
-<!-- Fuentes -->
-<link href="https://fonts.googleapis.com/css2?family=VT323&family=Share+Tech+Mono&display=swap" rel="stylesheet">
-
-<style>
-  :root{
-    --bg:#050507;
-    --panel:#0b0b0d;
-    --accent:#d94b4b;
-    --muted:#91a09a;
-    --green:#7be07b;
-    --text:#d8d8d8;
-  }
-
-  /* Reset básico */
-  *{box-sizing:border-box;margin:0;padding:0}
-  html,body{height:100%}
-  body{
-    font-family:'Share Tech Mono', monospace;
-    background: radial-gradient(1200px 800px at 10% 10%, #0b0b0d 0%, #030304 40%, #000 100%);
-    color:var(--text);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-    overflow:auto;
-    padding:40px;
-  }
-
-  /* Pantalla central */
-  .screen {
-    width: 1100px;
-    max-width:95%;
-    margin: 0 auto;
-    border: 2px solid #151515;
-    background: linear-gradient(180deg, rgba(20,20,22,0.6), rgba(3,3,4,0.95));
-    position: relative;
-    padding: 18px;
-    box-shadow: 0 18px 50px rgba(0,0,0,0.8), inset 0 0 40px rgba(0,0,0,0.6);
-    border-radius:8px;
-    overflow:hidden;
-  }
-
-  /* Barra superior tipo ventana retro */
-  .titlebar{
-    display:flex;
-    align-items:center;
-    gap:12px;
-    padding:6px 10px;
-    background: linear-gradient(180deg,#2b2f2f,#1b1c1c);
-    border-radius:4px;
-    margin-bottom:14px;
-    color:#c7d0c7;
-    font-size:13px;
-  }
-  .titlebar .dots{display:flex;gap:6px}
-  .dot{width:12px;height:12px;border-radius:3px}
-  .dot.red{background:#ff6b6b}
-  .dot.yellow{background:#ffd36b}
-  .dot.green{background:#6bff8a}
-
-  .titlebar .labels{flex:1; font-family:'VT323', monospace; letter-spacing:1px}
-  .titlebar .right{opacity:0.7;font-size:12px}
-
-  /* Layout principal en 3 columnas */
-  .grid{
-    display:grid;
-    grid-template-columns: 260px 1fr 260px;
-    gap:14px;
-    align-items:start;
-  }
-
-  /* Paneles */
-  .panel{
-    background: linear-gradient(180deg, rgba(6,6,6,0.6), rgba(12,12,12,0.45));
-    border:1px solid rgba(255,255,255,0.03);
-    padding:14px;
-    min-height:520px;
-    position:relative;
-  }
-  .panel h2{
-    color:var(--accent);
-    font-family:'VT323', monospace;
-    margin-bottom:10px;
-    font-size:20px;
-    letter-spacing:1px;
-  }
-  .list p{ color: #bfc9bf; margin:8px 0; opacity:0.95 }
-
-  /* Imagen central estilo "censurada" */
-  .imgwrap{
-    background:#070707;
-    border:1px solid rgba(255,255,255,0.03);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:8px;
-    min-height:300px;
-    position:relative;
-    overflow:hidden;
-  }
-  .imgwrap img{
-    max-width:100%;
-    max-height:100%;
-    display:block;
-    filter: grayscale(100%) contrast(120%) brightness(65%);
-    transform-origin:center;
-  }
-  /* "Censura" bars */
-  .censor{
-    position:absolute;
-    height:18%;
-    left:-10%;
-    right:-10%;
-    background:linear-gradient(90deg, rgba(0,0,0,1), rgba(0,0,0,0.95));
-    mix-blend-mode:multiply;
-    pointer-events:none;
-    animation: censorMove 3.6s infinite linear;
-  }
-  .censor:nth-child(2){ top:34%; height:10%; animation-duration:2.8s }
-  .censor:nth-child(3){ top:68%; height:8%; animation-duration:4.4s }
-  @keyframes censorMove {
-    0%{ transform:translateX(-6%) skewX(0.5deg) }
-    50%{ transform:translateX(6%) skewX(-0.3deg) }
-    100%{ transform:translateX(-6%) skewX(0.5deg) }
-  }
-
-  /* Texto en la parte baja de central */
-  .readout{
-    margin-top:12px;
-    font-size:13px;
-    line-height:1.35;
-    color:#cfd8d6;
-    background:linear-gradient(180deg, rgba(0,0,0,0.2), transparent);
-    padding:8px;
-    border-radius:4px;
-  }
-
-  /* Botón central grande */
-  .action{
-    margin-top:18px;
-    display:flex;
-    justify-content:center;
-  }
-  .btn{
-    border:2px solid rgba(255,255,255,0.06);
-    padding:12px 18px;
-    background:transparent;
-    color:var(--accent);
-    font-family:'VT323', monospace;
-    cursor:pointer;
-    text-transform:uppercase;
-    font-size:14px;
-    letter-spacing:1px;
-    transition: all .18s ease;
-    box-shadow: 0 6px 16px rgba(0,0,0,0.7);
-  }
-  .btn:hover{ transform:translateY(-3px); filter:brightness(1.1) }
-  .btn:active{ transform:translateY(0) }
-
-  /* Lado derecho: cuadro de advertencia (rojo) */
-  .warning{
-    background:linear-gradient(180deg,#0c0c0c,#050505);
-    border-left:3px solid rgba(217,75,75,0.18);
-    padding:12px;
-    color:#d9d9d9;
-    min-height:220px;
-  }
-  .warning .reds{ color:var(--accent); font-family:'VT323'; font-size:13px; margin-top:8px }
-
-  /* Efecto CRT: scanlines + vignette + noise */
-  .screen::after{
-    content:'';
-    pointer-events:none;
-    position:absolute;
-    inset:0;
-    background-image:
-      linear-gradient(rgba(0,0,0,0.15) 50%, rgba(255,255,255,0.02) 51%),
-      radial-gradient(1000px 600px at 50% 30%, rgba(20,20,25,0.15), rgba(0,0,0,0.6));
-    background-size:100% 4px, cover;
-    mix-blend-mode:overlay;
-    opacity:0.9;
-  }
-  /* Noise overlay */
-  .noise{
-    pointer-events:none;
-    position:absolute;
-    inset:0;
-    background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="n"><feTurbulence baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter><rect width="100%" height="100%" filter="url(%23n)" opacity="0.05"/></svg>');
-    mix-blend-mode:screen;
-    opacity:0.7;
-  }
-
-  /* Glitch pseudo elements for the main title */
-  .glitch {
-    position:relative;
-    display:inline-block;
-    font-family:'VT323', monospace;
-    color:var(--accent);
-    font-size:24px;
-    letter-spacing:1px;
-  }
-  .glitch::before,
-  .glitch::after{
-    content:attr(data-text);
-    position:absolute;
-    left:0; top:0;
-    clip:rect(0,9999px,0,0);
-  }
-  .glitch::before{ left:2px; text-shadow:-2px 0 var(--green); opacity:0.7; animation:gl1 2.1s infinite linear }
-  .glitch::after{ left:-2px; text-shadow:2px 0 var(--accent); opacity:0.6; animation:gl2 2.7s infinite linear }
-  @keyframes gl1 { 0%{clip:rect(0,9999px,10px,0)} 10%{clip:rect(30px,9999px,40px,0)} 20%{clip:rect(60px,9999px,70px,0)} 30%{clip:rect(10px,9999px,40px,0)} 100%{clip:rect(0,9999px,10px,0)} }
-  @keyframes gl2 { 0%{clip:rect(20px,9999px,30px,0)} 30%{clip:rect(60px,9999px,80px,0)} 60%{clip:rect(12px,9999px,18px,0)} 100%{clip:rect(20px,9999px,30px,0)} }
-
-  /* small helpers */
-  .muted{ color:var(--muted); font-size:13px; margin-bottom:6px }
-  .monos{ font-family:'VT323'; font-size:14px; color:#cfe8cf }
-
-  /* Modal / overlay when user continues (glitchy warning) */
-  .overlay{
-    position:fixed; inset:0; display:flex; align-items:center; justify-content:center;
-    background:rgba(0,0,0,0.6); backdrop-filter: blur(2px);
-    z-index:40; visibility:hidden; opacity:0; transition:all .28s ease;
-  }
-  .overlay.show{ visibility:visible; opacity:1 }
-  .modal{
-    width:720px; max-width:92%; background:#070707; border:2px solid rgba(255,255,255,0.04);
-    padding:18px; box-shadow:0 30px 80px rgba(0,0,0,0.9);
-    font-family:'Share Tech Mono';
-  }
-  .modal .err{ color:var(--accent); font-size:18px; margin-bottom:12px }
-  .modal pre{ background:#000; padding:12px; color:#fff; max-height:260px; overflow:auto; font-family:'VT323' }
-
-  /* flicker animation */
-  @keyframes flicker {
-    0%{ opacity:1 }
-    10%{ opacity:.85 }
-    12%{ opacity:1 }
-    30%{ opacity:.9 }
-    31%{ opacity:1 }
-    100%{ opacity:1 }
-  }
-  .flicker { animation: flicker 6s infinite }
-
-  /* responsive */
-  @media (max-width:900px){
-    .grid{ grid-template-columns: 1fr; }
-    .panel{ min-height:180px }
-  }
-
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[ARG_IAR] - DATOS ENTIDAD</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="screen flicker" role="application" aria-label="Registro 97 - Panel">
-  <div class="titlebar">
-    <div class="dots">
-      <div class="dot red"></div>
-      <div class="dot yellow"></div>
-      <div class="dot green"></div>
-    </div>
-    <div class="labels">PEROR 1998 &nbsp; | &nbsp; GET_OUT_NOW!</div>
-    <div class="right">[DEBUG MODE]</div>
-  </div>
-
-  <div class="grid">
-    <!-- left column -->
-    <aside class="panel" aria-hidden="false">
-      <h2 class="glitch" data-text="[REG!STRO 97: ENTIDADES]">[REG!STRO 97: ENTIDADES]</h2>
-      <div class="list muted">
-        <p>&gt; ENTRADA_01_CLX</p>
-        <p>&gt; ENTRADA_08_CLX</p>
-        <p>&gt; RESÓN</p>
-        <p>&gt; ESPECIMEN-A-03</p>
-        <p>&gt; VEX</p>
-        <p>&gt; CODIGO_AS-03</p>
-        <p>&gt; PROJECTO ANDO</p>
-        <p>&gt; CRACLE__ REC.</p>
-        <p>&gt; CODIGO_MRSE_REC.</p>
-      </div>
-      <div style="position:absolute;left:12px;bottom:12px;color:#9fb19f;font-size:12px">NO MIRAR DIRECTAMENTE</div>
-    </aside>
-
-    <!-- center column -->
-    <main class="panel">
-      <div style="display:flex;justify-content:space-between;align-items:center">
-        <div class="monos">[IMAGEN CENSURADA PROTOCOLO 7B]</div>
-        <div class="muted">ID: SPT-97-A</div>
-      </div>
-
-      <div class="imgwrap" style="margin-top:12px">
-        <!-- reemplaza 'placeholder.jpg' por tu imagen -->
-        <img id="mainImg" src="placeholder.jpg" alt="Imagen censurada">
-        <div class="censor" style="top:12%"></div>
-        <div class="censor" style="top:44%"></div>
-        <div class="censor" style="top:72%"></div>
-      </div>
-
-      <div class="readout" id="readout">
-        <div id="typedLine" style="min-height:70px"></div>
-        <div style="margin-top:8px; color:#c2cfc2; font-size:13px">
-          NO MIRE DIACTEMENTE. LA FRECUENCIA ES INCORRECTA.
+    <div class="monitor-container">
+        <div class="monitor-bezel">
+            <div class="monitor-screen">
+                <div class="top-bar">
+                    <span class="window-title">[ECCC_NCI] - [NES_WEB_ACPEA]</span>
+                    <span class="user-info">PEROR 1998 ARCHINO_ENTIDADES_VISITOR_LOG</span>
+                </div>
+                <div class="header">
+                    <h1>[ARG_IAR - DATOS]</h1>
+                </div>
+                <div class="content-grid">
+                    <div class="upload-section">
+                        <h2>CARGAR DATOS</h2>
+                        <div class="drop-zone" id="dropZone">
+                            <p>ARRRASTA Y SUELTA ARCHIVOS AQUÍ</p>
+                            <img src="" alt="Vista previa de imagen" class="image-preview" id="imagePreview" style="display: none;">
+                        </div>
+                        <input type="file" id="photoUpload" accept="image/*" style="display: none;">
+                        <button class="retro-button" onclick="document.getElementById('photoUpload').click()">SUBIR FOTO REAL</button>
+                        <input type="file" id="audioUpload" accept="audio/*" style="display: none;">
+                        <button class="retro-button" onclick="document.getElementById('audioUpload').click()">SUBIR ARCHIVO DE AUDIO</button>
+                    </div>
+                    <div class="viewer-section">
+                        <h2>VISOR</h2>
+                        <div class="viewer-display">
+                            <img id="viewerImage" src="placeholder.jpg" alt="Imagen en visor">
+                            <audio id="viewerAudio" controls style="display: none; width: 100%;"></audio>
+                        </div>
+                        <div class="file-list" id="fileList">
+                            <div class="file-item" data-type="image" data-src="placeholder.jpg">
+                                > ENTRADA_001.JPG
+                            </div>
+                        </div>
+                        <div class="audio-controls" style="display: none;">
+                            <button class="retro-button" id="playButton">PLAY</button>
+                            <button class="retro-button" id="stopButton">STOP</button>
+                        </div>
+                    </div>
+                    <div class="comments-section">
+                        <h2>COMENTARIOS (OPCIONAL)</h2>
+                        <textarea class="retro-textarea" placeholder="SISTEMA OPERAWEB_ALPHA"></textarea>
+                    </div>
+                </div>
+                <div class="bottom-bar">
+                    <button class="retro-button wide-button">GUARDAR Y COMPARTIR</button>
+                </div>
+            </div>
         </div>
-
-        <div class="action">
-          <button class="btn" id="continueBtn">[CONTINUAR PROFUNDIZANDO / NO HAY SALIDA REAL]</button>
-        </div>
-      </div>
-    </main>
-
-    <!-- right column -->
-    <aside class="panel warning">
-      <div class="muted">RLELIVEN</div>
-      <div style="height:120px; display:flex;align-items:center;justify-content:center">
-        <!-- mini eye raster -->
-        <img src="eye_placeholder.jpg" alt="ojo" style="max-width:100%; filter:grayscale(100%) contrast(120%) brightness(70%)">
-      </div>
-      <div class="reds">
-        SUEÑOS_ROTTOS
-      </div>
-      <div style="margin-top:8px;color:#bdbdbd;font-size:13px">
-        SUEÑOS DISTORSIÓN // SOMBRAS HALLAN // REPETICIÓN...
-      </div>
-    </aside>
-  </div>
-
-  <div class="noise" aria-hidden="true"></div>
-</div>
-
-<!-- overlay modal -->
-<div class="overlay" id="overlay" role="dialog" aria-modal="true" aria-hidden="true">
-  <div class="modal">
-    <div class="err">ERROR 19998 — ACCESO</div>
-    <pre id="syslog">
-XXX INIANCIO MÓDULL DE VERIFICACIÓN.. XX
-&gt; ESTADO: ERROR DE DATOS. RECOMIENDO CERRAR SESIÓN.
-&gt; ARCHIVO 404: MENTE EN BLANCO.
-&gt; COMPROBANDO CONEXIÓN.. [ESTÁ USLO AQUÍ]
-&gt; COMPROBANDO CONEXIÓN.. [ESTÁ USTED AQUÍ]
-&gt; REINICIICI PROTOCLO. ¿POR QUÉ HA ENTRADO?
-
-[ADVERTENCIA DEL SISTEMA: DATOS CORRUPTOS]
-PAZ. CIERRE. CIERRE LA PESTAÑA.
-ÉL SABE QUE ESTÁS MIRANDO ESTO.
-SU PRESENCIA SE ALIMENTA DE LO CURIOSIDAD.
-DEBE SALIR.
-    </pre>
-    <div style="display:flex;gap:8px;justify-content:flex-end;margin-top:12px">
-      <button class="btn" id="leaveBtn">SALIR (RECOMENDADO)</button>
-      <button class="btn" id="forceBtn" style="border-color:var(--accent)">CONTINUAR (RIESGO)</button>
     </div>
-  </div>
-</div>
 
-<script>
-/* ====== Tipeo simulado para el cuadro central ====== */
-const lines = [
-  "[IMAGEN_CENSURADA. PROTOCOLO 7B]",
-  "ERROR UUSCTURLO / 7E",
-  "ANALIZANDO FRECUENCIAS...  0x03F",
-  "S I N T O N I A  I N C O R R E C T A"
-];
-const tgt = document.getElementById('typedLine');
-let lineI = 0, charI = 0;
-
-function typeNext(){
-  if(lineI >= lines.length) { return; }
-  const line = lines[lineI];
-  tgt.innerHTML = lines.slice(0,lineI).map(l => '<div>'+escapeHtml(l)+'</div>').join('') + '<div>' + escapeHtml(line.slice(0,charI)) + '<span style="opacity:0.8">█</span></div>';
-  charI++;
-  if(charI > line.length){
-    lineI++; charI=0;
-    setTimeout(typeNext, 700 + Math.random()*900);
-  } else {
-    setTimeout(typeNext, 35 + Math.random()*60);
-  }
-}
-function escapeHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;'); }
-typeNext();
-
-/* ====== Glitchy image shift randomizer ====== */
-const img = document.getElementById('mainImg');
-function glitchOnce(){
-  img.style.transition = 'transform 80ms ease';
-  const tx = (Math.random()-0.5)*6;
-  const ty = (Math.random()-0.5)*6;
-  const rz = (Math.random()-0.5)*0.6;
-  img.style.transform = `translate(${tx}px,${ty}px) rotate(${rz}deg) scale(1.02)`;
-  setTimeout(()=> img.style.transform = 'translate(0,0) rotate(0) scale(1)', 120 + Math.random()*360);
-}
-// glitch ocasional
-setInterval(()=> { if(Math.random() < 0.25) glitchOnce(); }, 900);
-
-/* ====== Botones / modal ====== */
-const overlay = document.getElementById('overlay');
-const continueBtn = document.getElementById('continueBtn');
-const leaveBtn = document.getElementById('leaveBtn');
-const forceBtn = document.getElementById('forceBtn');
-
-continueBtn.addEventListener('click', () => {
-  overlay.classList.add('show');
-  overlay.setAttribute('aria-hidden','false');
-  // pequeña sacudida y "corrupt" del texto
-  const sys = document.getElementById('syslog');
-  let text = sys.textContent;
-  let i=0;
-  const intr = setInterval(()=>{
-    sys.textContent = corruptText(text, Math.min(0.35, 0.02 + 0.02*i));
-    i++;
-    if(i>8) clearInterval(intr);
-  },120);
-});
-
-leaveBtn.addEventListener('click', () => {
-  overlay.classList.remove('show');
-  overlay.setAttribute('aria-hidden','true');
-});
-
-forceBtn.addEventListener('click', ()=> {
-  // Simula un "lock in" final: se oscurece la pantalla e invoca mensaje rojo
-  overlay.querySelector('.modal').innerHTML = '<div style="color:#ff5b5b;font-family:VT323;font-size:20px">ACCESO CONFIRMADO</div><p style="margin-top:12px;color:#d8d8d8">RIESGO: 98% — PROCESO IRREVERSIBLE.</p>';
-  setTimeout(()=> {
-    document.body.style.background = '#000';
-    document.querySelector('.screen').style.filter = 'hue-rotate(-20deg) contrast(1.2) grayscale(.7)';
-  },400);
-});
-
-/* ====== util: corrompe texto aleatoriamente ====== */
-function corruptText(s, intensity){
-  const glyphs = "█▓▒░/#%&?*<>[]{}()=+~";
-  return s.split('').map(ch => {
-    if(Math.random() < intensity){
-      return glyphs.charAt(Math.floor(Math.random()*glyphs.length));
-    }
-    return ch;
-  }).join('');
-}
-
-/* ====== pequeña "flicker" aleatoria para la pantalla ====== */
-setInterval(()=>{
-  const el = document.querySelector('.screen');
-  el.style.opacity = (0.92 + Math.random()*0.09);
-}, 500);
-
-/* ====== consejos de reemplazo de imágenes: intenta usar 16:9 o 4:3 para que se vea bien ====== */
-/* ====== Nota: reemplaza 'placeholder.jpg' y 'eye_placeholder.jpg' por tus imágenes reales ====== */
-
-</script>
-
+    <script src="script.js"></script>
 </body>
 </html>
